@@ -162,6 +162,44 @@ function spawnBubble(x, y, r) {
   bubble.addEventListener('animationend', () => bubble.remove());
 }
 
+let audioCtx = null;
+
+function playBubbleSound() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+
+  const ctx = audioCtx;
+  const now = ctx.currentTime;
+
+  /* Sine oscillator sweeping upward — classic water-bubble pitch */
+  const osc  = ctx.createOscillator();
+  const gain = ctx.createGain();
+
+  /* Slight low-pass to soften high-frequency harshness */
+  const filter = ctx.createBiquadFilter();
+  filter.type            = 'lowpass';
+  filter.frequency.value = 1800;
+
+  osc.connect(filter);
+  filter.connect(gain);
+  gain.connect(ctx.destination);
+
+  const startFreq = randomBetween(180, 320);
+  const endFreq   = startFreq * randomBetween(2.2, 3.5);
+  const duration  = randomBetween(0.12, 0.22);
+
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(startFreq, now);
+  osc.frequency.exponentialRampToValueAtTime(endFreq, now + duration);
+
+  gain.gain.setValueAtTime(0, now);
+  gain.gain.linearRampToValueAtTime(0.18, now + 0.008);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+  osc.start(now);
+  osc.stop(now + duration + 0.01);
+}
+
 function getLabel(e) {
   /* prefer a single printable character, fall back to key name */
   if (e.key.length === 1) return e.key;
@@ -181,5 +219,6 @@ document.addEventListener('keydown', (e) => {
     hintVisible = false;
   }
 
+  playBubbleSound();
   spawnFish(getLabel(e));
 });
