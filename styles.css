@@ -19,30 +19,7 @@ body {
   overflow: hidden;
 }
 
-/* Caustic light shimmer on the surface */
-#aquarium::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 120px;
-  background: repeating-linear-gradient(
-    90deg,
-    transparent,
-    transparent 60px,
-    rgba(255,255,255,0.03) 60px,
-    rgba(255,255,255,0.03) 62px
-  );
-  animation: shimmer 8s linear infinite;
-  pointer-events: none;
-  z-index: 1;
-}
 
-@keyframes shimmer {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(62px); }
-}
 
 /* Sandy floor */
 #aquarium::after {
