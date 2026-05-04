@@ -36,7 +36,6 @@ function makeFishSVG(color, size, label, facingRight) {
   const rx = w * 0.26;   // body x-radius
   const ry = h * 0.32;   // body y-radius
 
-  /* Forked caudal fin — drawn pointing left, flipped below when !facingRight */
   const tailPath = [
     `M ${w*0.28},${cy - ry*0.45}`,
     `C ${w*0.18},${cy - ry*0.9}  ${w*0.05},${h*0.10}  ${w*0.02},${h*0.06}`,
@@ -46,14 +45,12 @@ function makeFishSVG(color, size, label, facingRight) {
     'Z',
   ].join(' ');
 
-  /* Dorsal fin */
   const dorsalPath = [
     `M ${cx - rx*0.15},${cy - ry}`,
     `C ${cx + rx*0.05},${cy - ry*2.1}  ${cx + rx*0.25},${cy - ry*2.1}  ${cx + rx*0.42},${cy - ry}`,
     'Z',
   ].join(' ');
 
-  /* Pectoral fin */
   const pectoralPath = [
     `M ${cx + rx*0.02},${cy + ry*0.15}`,
     `C ${cx + rx*0.35},${cy + ry*1.4}  ${cx + rx*0.72},${cy + ry*1.25}  ${cx + rx*0.55},${cy + ry*0.5}`,
@@ -201,7 +198,6 @@ function playBubbleSound() {
 }
 
 function getLabel(e) {
-  /* prefer a single printable character, fall back to key name */
   if (e.key.length === 1) return e.key;
   const aliases = {
     ' ': '␣', Enter: '↵', Backspace: '⌫', Tab: '⇥',

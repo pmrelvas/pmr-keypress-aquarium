@@ -28,4 +28,4 @@ Deployed at: https://pmrelvas.github.io/pmr-keypress-aquarium/
 
 ## License
 
-[CC BY-NC 4.0](LICENSE) — free to share and adapt, but not for commercial use.
+[MIT](LICENSE)
